@@ -9,7 +9,7 @@ export default function Times() {
   return (
     <div className="content">
       <Row>
-        <Col md="12">
+        <Col md="6">
           <CadastrarTime />
         </Col>
       </Row>

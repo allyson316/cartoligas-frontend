@@ -3,146 +3,67 @@ import {
   Row,
   Col,
   Card,
-  CardBody,
   CardHeader,
   CardTitle,
+  CardBody,
   Button
 } from "reactstrap";
-import BootstrapTable from "react-bootstrap-table-next";
-import Select from "react-select";
-import NotificationAlert from "react-notification-alert";
-
-import { listTimes, getRodadasByLiga } from "../rodadasActions";
+import { getTimes } from "../rodadasActions";
 
 export default class ListarTimes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listLimes: [],
-      listRodadas: [],
-      selectRodada: null,
-      time: ""
+      listLigas: []
     };
   }
 
-  addTime(time) {
-    if (this.state.selectRodada === null) {
-      const options = {
-        place: "tr",
-        message: (
-          <div>
-            <div>
-              É necessário selecionar uma rodada para poder adicionar um time!
-            </div>
-          </div>
-        ),
-        type: "danger",
-        icon: "tim-icons icon-alert-circle-exc",
-        autoDismiss: 6
-      };
-      this.refs.notificationAlert.notificationAlert(options);
-    } else {
-      const values = {
-        idTime: time.idTime,
-        idRodada: this.state.selectRodada.value
-      };
-      console.log(values);
-    }
-  }
-
-  formatter = (cell, row) => {
-    return (
-      <Row>
-        <Col md="1">
-          <div className="photo">
-            <img alt="..." src={row.urlEscudoSvg} />
-          </div>
-        </Col>
-        <Col md="9">
-          <CardTitle tag="h4">{row.nome}</CardTitle>
-        </Col>
-        <Col md="2">
-          <Button
-            className="btn-link"
-            color="info"
-            size="sm"
-            onClick={e => this.addTime(row)}
-          >
-            <i className="tim-icons icon-simple-add" />
-          </Button>
-        </Col>
-      </Row>
-    );
-  };
-
   async componentDidMount() {
-    const timesResult = await listTimes();
-    if (timesResult.status === 200) {
-      this.setState({ listLimes: timesResult.data });
-    }
-    const rodadasResult = await getRodadasByLiga();
-    if (rodadasResult.status === 200) {
-      const rodadas = rodadasResult.data.map(item => {
-        return {
-          value: item.idRodada,
-          label: `Rodada ${item.idCartola}`
-        };
+    const times = await getTimes();
+    if (times.status === 200) {
+      this.setState({
+        listLigas: times.data
       });
-      this.setState({ listRodadas: rodadas });
     }
   }
-
   render() {
-    const columnsTimes = [
-      {
-        dataField: "idTime",
-        text: "Times",
-        headerAlign: "center",
-        formatter: this.formatter
-      }
-    ];
-
     return (
-      <Row>
-        <div className="rna-container">
-          <NotificationAlert ref="notificationAlert" />
-        </div>
-        <Col md="6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Listar Times</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <BootstrapTable
-                keyField="idTime"
-                data={this.state.listLimes}
-                columns={columnsTimes}
-                noDataIndication="nenhum time encontrado"
-                bordered={false}
-                bootstrap4={true}
-              />
-            </CardBody>
-          </Card>
-        </Col>
-        <Col md="6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Listar Rodadas</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <Select
-                className="react-select info"
-                classNamePrefix="react-select"
-                name="singleSelect"
-                value={this.state.selectRodada}
-                onChange={value => this.setState({ selectRodada: value })}
-                options={this.state.listRodadas}
-                placeholder="Selecione a Rodada"
-              />
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
+      <Card className="card-plain">
+        <CardHeader>
+          <CardTitle>Times Cadastrados</CardTitle>
+        </CardHeader>
+        <CardBody>
+          {this.state.listLigas.map(item => (
+            <Row
+              key={item.id}
+              style={{
+                width: "100%",
+                lineHeight: "50px",
+                float: "left",
+                textAlign: "center"
+              }}
+            >
+              <Col md="10">
+                <Row>
+                  <Col className="photo" md="2">
+                    <img alt="..." src={item.url_escudo_svg} />
+                  </Col>
+                  <Col className="text-left" md="10">
+                    <p>
+                      <strong>{item.nome}</strong>
+                    </p>
+                  </Col>
+                </Row>
+              </Col>
+              <Col md="2">
+                <Button className="btn-link btn-icon" color="success" size="sm">
+                  <i className="tim-icons icon-simple-add" />
+                </Button>
+              </Col>
+            </Row>
+          ))}
+        </CardBody>
+      </Card>
     );
   }
 }

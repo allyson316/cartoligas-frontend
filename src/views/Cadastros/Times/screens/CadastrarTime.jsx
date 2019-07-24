@@ -150,7 +150,7 @@ export default class CadastrarTime extends Component {
     };
 
     return (
-      <Card>
+      <Card className="card-plain">
         <div className="rna-container">
           <NotificationAlert ref="notificationAlert" />
         </div>
@@ -167,7 +167,7 @@ export default class CadastrarTime extends Component {
               Cadastrar
             </Button>
           </Col>
-          <Col className="mt-2 mr-auto ml-auto" md="6">
+          <Col>
             <FormGroup>
               <Input
                 name="nomeTime"
@@ -175,7 +175,7 @@ export default class CadastrarTime extends Component {
                 onChange={this.handleChange}
                 type="text"
                 placeholder="Nome do time"
-                style={{ height: "50px", fontSize: "24px" }}
+                style={{ height: "40px", fontSize: "18px" }}
               />
               <BootstrapTable
                 keyField="time_id"
