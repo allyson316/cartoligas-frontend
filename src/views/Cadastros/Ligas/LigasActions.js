@@ -10,7 +10,7 @@ const getLigas = async () => {
         Authorization: token
       }
     } */
-    const url = `${env.API_URL}/api/ligas/list`;
+    const url = `${env.API_URL}/ligas`;
     const ligasResult = await axios.get(url);
     return ligasResult;
   } catch (error) {

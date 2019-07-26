@@ -33,35 +33,38 @@ export default class ListarTimes extends Component {
           <CardTitle>Times Cadastrados</CardTitle>
         </CardHeader>
         <CardBody>
-          {this.state.listLigas.map(item => (
-            <Row
-              key={item.id}
-              style={{
-                width: "100%",
-                lineHeight: "50px",
-                float: "left",
-                textAlign: "center"
-              }}
-            >
-              <Col md="10">
-                <Row>
-                  <Col className="photo" md="2">
-                    <img alt="..." src={item.url_escudo_svg} />
+          <ul className="list-unstyled">
+            {this.state.listLigas.map(item => (
+              <li key={item.id}>
+                <Row
+                  style={{
+                    width: "100%",
+                    lineHeight: "50px",
+                    float: "left",
+                    textAlign: "center"
+                  }}
+                >
+                  <Col className="text-right" md="2">
+                    <div className="photo">
+                      <img alt="..." src={item.url_escudo_svg} width="30px" />
+                    </div>
                   </Col>
-                  <Col className="text-left" md="10">
-                    <p>
-                      <strong>{item.nome}</strong>
-                    </p>
+                  <Col className="text-left">
+                    <p>{item.nome}</p>
+                  </Col>
+                  <Col md="1">
+                    <Button
+                      className="btn-link btn-icon"
+                      color="success"
+                      size="sm"
+                    >
+                      <i className="tim-icons icon-simple-add" />
+                    </Button>
                   </Col>
                 </Row>
-              </Col>
-              <Col md="2">
-                <Button className="btn-link btn-icon" color="success" size="sm">
-                  <i className="tim-icons icon-simple-add" />
-                </Button>
-              </Col>
-            </Row>
-          ))}
+              </li>
+            ))}
+          </ul>
         </CardBody>
       </Card>
     );

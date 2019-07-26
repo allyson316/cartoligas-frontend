@@ -29,7 +29,7 @@ export default class TimesRodada extends Component {
             <img alt="..." src={row.time.url_escudo_svg} />
           </div>
         </Col>
-        <Col md="8">
+        <Col>
           <p>
             <strong>{row.time.nome}</strong>
           </p>
@@ -46,13 +46,18 @@ export default class TimesRodada extends Component {
       {
         dataField: "id",
         text: "id",
-        headerAlign: "center"
+        hidden: true
       },
       {
         dataField: "time.nome",
         text: "time",
         headerAlign: "center",
         formatter: this.formatter
+      },
+      {
+        dataField: "time.id_time_cartola",
+        text: "id cartola",
+        headerAlign: "center"
       },
       {
         dataField: "pago",

@@ -59,11 +59,12 @@ const routes = [
         layout: "/admin"
       },
       {
-        path: "/rodadas",
+        path: "/rodadas/:id",
         name: "Rodadas",
         mini: "R",
         component: Rodadas,
-        layout: "/admin"
+        layout: "/admin",
+        invisible: true
       }
     ]
   }
